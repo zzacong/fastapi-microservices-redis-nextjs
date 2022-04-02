@@ -7,6 +7,9 @@ class Product(HashModel):
   price: float
   quantity: int
 
+  def __str__(self):
+    return f"Product(id={self.pk!r}, name={self.name!r}, price={self.price!r}, quantity={self.quantity!r})"
+
   class Meta:
     database = redis
 
