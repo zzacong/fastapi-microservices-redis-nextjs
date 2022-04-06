@@ -1,6 +1,6 @@
 import time
 from src.database import redis
-from src.model import Product
+from src.models import Product
 
 
 def main():

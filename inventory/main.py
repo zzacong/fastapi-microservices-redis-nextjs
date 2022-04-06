@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import asyncio
 
-from src.model import Product, format_product
+from src.router import router
+from src.consumer import consume
 
 app = FastAPI()
 app.add_middleware(
@@ -13,25 +15,9 @@ app.add_middleware(
 
 
 @app.get("/")
-def read_root():
+def index():
   return {"Hello": "Inventory"}
 
 
-@app.get('/products')
-def get_products():
-  return [format_product(pk) for pk in Product.all_pks()]
-
-
-@app.get('/products/{product_id}')
-def get_products(product_id: str):
-  return format_product(Product.get(product_id).pk)
-
-
-@app.post('/products', status_code=201)
-def create_product(product: Product):
-  return product.save()
-
-
-@app.delete('/products/{product_id}')
-def delete_product(product_id: str):
-  return Product.delete(product_id)
+app.include_router(router)
+asyncio.create_task(consume())
