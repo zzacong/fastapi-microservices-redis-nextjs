@@ -1,10 +1,18 @@
 <script>
+  import Modal from '$components/Modal.svelte'
+  import AddPostForm from '$components/AddPostForm.svelte'
+  import { isModalOpen } from '$lib/stores'
 </script>
 
-<div class="h-screen pt-[40vh]">
-  <h1
-    class="bg-gradient-to-r from-blue-500 to-indigo-400 bg-clip-text text-center text-8xl font-bold text-transparent"
+<div class="pt-10">
+  <button
+    on:click={() => ($isModalOpen = true)}
+    class="rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-2 font-semibold text-white hover:opacity-90"
   >
-    Welcome to SvelteKit
-  </h1>
+    Add
+  </button>
 </div>
+
+<Modal title="Add new product">
+  <AddPostForm />
+</Modal>
