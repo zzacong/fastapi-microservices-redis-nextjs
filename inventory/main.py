@@ -1,9 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import asyncio
 
 from src.router import router
-from src.consumer import consume
 
 app = FastAPI()
 app.add_middleware(
@@ -20,4 +18,3 @@ def index():
 
 
 app.include_router(router)
-asyncio.create_task(consume())

@@ -1,0 +1,8 @@
+{
+  "eslint.workingDirectories": [
+    "./next-app",
+    "./inventory",
+    "./payment",
+    "./sveltekit-app"
+  ]
+}

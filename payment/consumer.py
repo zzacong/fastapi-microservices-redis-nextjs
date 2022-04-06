@@ -1,6 +1,6 @@
 import time
 from src.database import redis
-from src.model import Order
+from src.models import Order
 
 
 def main():
