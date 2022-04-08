@@ -1,12 +1,36 @@
 <script>
   import clsx from 'clsx'
+  import { isModalOpen } from '$lib/stores'
+
+  let name
+  let price
+  let quantity
+
+  const handleSubmit = async e => {
+    try {
+      await fetch(`${import.meta.env.VITE_INVENTORY_SERVER}/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          price,
+          quantity
+        })
+      })
+      e.target.reset()
+      $isModalOpen = false
+    } catch (error) {
+      console.error(error)
+    }
+  }
 </script>
 
-<form on:submit|preventDefault class="flex flex-col justify-between">
+<form on:submit|preventDefault={handleSubmit} class="flex flex-col justify-between">
   <div class="flex flex-col space-y-6">
     <div class="">
       <label for="name" class="sr-only">Name</label>
       <input
+        bind:value={name}
         type="text"
         placeholder="Name"
         class={clsx(
@@ -18,6 +42,7 @@
     <div class="">
       <label for="price" class="sr-only">Price</label>
       <input
+        bind:value={price}
         type="number"
         placeholder="Price"
         class={clsx(
@@ -29,6 +54,7 @@
     <div class="">
       <label for="quantity" class="sr-only">Quantity</label>
       <input
+        bind:value={quantity}
         type="number"
         placeholder="Quantity"
         class={clsx(
