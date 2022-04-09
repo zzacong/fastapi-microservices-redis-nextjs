@@ -1,7 +1,32 @@
+<script context="module">
+  import { fetchProducts } from '$lib/inventory'
+
+  export async function load() {
+    const products = await fetchProducts()
+    return { props: { initialProducts: products } }
+  }
+</script>
+
 <script>
   import Modal from '$components/Modal.svelte'
   import AddPostForm from '$components/AddPostForm.svelte'
-  import { isModalOpen } from '$lib/stores'
+  import ProductsTable from '$components/ProductsTable.svelte'
+  import { isModalOpen, mutated } from '$lib/stores'
+  import { onMount } from 'svelte'
+
+  export let initialProducts
+  let products
+
+  onMount(() => (products = initialProducts))
+
+  $: {
+    ;(async () => {
+      if ($mutated) {
+        products = await fetchProducts()
+        $mutated = false
+      }
+    })()
+  }
 </script>
 
 <div class="pt-10">
@@ -11,6 +36,8 @@
   >
     Add
   </button>
+
+  <ProductsTable {products} />
 </div>
 
 <Modal title="Add new product">

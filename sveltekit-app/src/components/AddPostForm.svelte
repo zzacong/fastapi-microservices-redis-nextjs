@@ -1,6 +1,6 @@
 <script>
   import clsx from 'clsx'
-  import { isModalOpen } from '$lib/stores'
+  import { isModalOpen, mutated } from '$lib/stores'
 
   let name
   let price
@@ -19,6 +19,7 @@
       })
       e.target.reset()
       $isModalOpen = false
+      $mutated = true
     } catch (error) {
       console.error(error)
     }
